@@ -6,7 +6,7 @@ import { getAllShifts } from '../../services/apis'
 import { shiftStates } from '../../services/constants'
 import { filterByProperty } from '../../services/util'
 import Loader from '../Loader'
-import ShiftGroup from '../ShiftGroup'
+import ShiftGroup from '../shiftGroup'
 
 const MyShifts = () => {
 	const [shiftGroups, setShiftGroups] = useState({})

@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import ShiftCard from './shiftCard'
+import ShiftCard from '../shiftCard'
 import { formatRelative, differenceInMinutes } from 'date-fns'
 import enIN from 'date-fns/locale/en-IN'
-import { parseDuration } from '../services/util'
+import { parseDuration } from '../../services/util'
+
+import styles from './index.module.scss'
 
 const formatRelativeLocale = {
 	lastWeek: 'MMMM dd',
@@ -58,9 +60,12 @@ const ShiftGroup = ({ shifts = [] }) => {
 	if (shifts.length === 0) return null
 
 	return (
-		<div>
-			<div>
-				{date} {shifts.length} shifts, {totalTime}
+		<div className={styles.group}>
+			<div className={styles.date}>
+				{date}{' '}
+				<span className={styles.groupInfo}>
+					{shifts.length} shifts, {totalTime}
+				</span>
 			</div>
 			{shifts.map(shift => (
 				<ShiftCard key={shift.id} {...shift} />

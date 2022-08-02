@@ -1,0 +1,17 @@
+.bar {
+  width: 100%;
+  display: flex;
+  gap: 24px;
+  margin-bottom: 12px;
+
+  .tab {
+    color: #a4b8d3;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 8px;
+
+    &.selected {
+      color: #004fb4;
+    }
+  }
+}

@@ -12,12 +12,12 @@ const ShiftCard = ({
 }) => {
 	return (
 		<div className={styles.card}>
-			<div>
+			<div className={styles.timeArea}>
 				<h5 className={styles.time}>
 					{format(new Date(startTime), 'HH:mm')}-
 					{format(new Date(endTime), 'HH:mm')}
 				</h5>
-				{myShiftsTab && <p>{area}</p>}
+				{myShiftsTab && <p className={styles.area}>{area}</p>}
 			</div>
 			<div className={styles.statusAction}>
 				{<div className={classHelper(styles.status)}>Booked</div>}

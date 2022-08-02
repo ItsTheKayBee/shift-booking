@@ -1,17 +1,28 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import useRequest from '../../hooks/useRequest'
 import { getAllShifts } from '../../services/apis'
 import _ from 'underscore'
 import Loader from '../Loader'
-import ShiftGroup from '../ShiftGroup'
-import AreaTabBar from '../AreaTabBar'
+import AreaTabBar from '../areaTabBar/AreaTabBar'
 import { areas } from '../../services/constants'
+import ShiftGroup from '../shiftGroup'
+
+import styles from './index.module.scss'
 
 const AvailableShifts = () => {
 	const [shiftGroups, setShiftGroups] = useState({})
+	const [shiftGroupsByDate, setShiftGroupsByDate] = useState({})
 	const [selectedArea, setSelectedArea] = useState(areas.HELSINKI)
 
 	const { data, error, loading, handleRequest } = useRequest()
+
+	const groupByDate = useCallback(() => {
+		const result = _.groupBy(shiftGroups[selectedArea], ({ startTime }) =>
+			new Date(startTime).toDateString()
+		)
+		console.log(result)
+		setShiftGroupsByDate(result)
+	}, [selectedArea, shiftGroups])
 
 	useEffect(() => {
 		handleRequest(getAllShifts)
@@ -25,8 +36,12 @@ const AvailableShifts = () => {
 		}
 	}, [data])
 
+	useEffect(() => {
+		groupByDate()
+	}, [groupByDate])
+
 	return (
-		<div>
+		<section className={styles.section}>
 			{loading && <Loader />}
 			{error && 'Error in loading shifts'}
 			<AreaTabBar
@@ -34,8 +49,10 @@ const AvailableShifts = () => {
 				setSelectedArea={setSelectedArea}
 				shiftGroups={shiftGroups}
 			/>
-			{<ShiftGroup shifts={shiftGroups[selectedArea]} />}
-		</div>
+			{Object.keys(shiftGroupsByDate).map(date => (
+				<ShiftGroup shifts={shiftGroupsByDate[date]} key={date} />
+			))}
+		</section>
 	)
 }
 

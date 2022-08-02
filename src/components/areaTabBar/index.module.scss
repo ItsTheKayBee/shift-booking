@@ -1,0 +1,19 @@
+.bar {
+  width: 100%;
+  display: flex;
+  border: 1px solid #cbd2e1;
+
+  .tab {
+    color: #a4b8d3;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 16px;
+    border: 1px solid #cbd2e1;
+    flex: 1;
+    text-align: center;
+
+    &.selected {
+      color: #004fb4;
+    }
+  }
+}
