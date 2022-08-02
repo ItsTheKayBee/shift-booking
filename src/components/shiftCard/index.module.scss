@@ -1,0 +1,51 @@
+@import "../../styles/variables";
+
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .time {
+    color: #4f6c92;
+  }
+  .statusAction {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    .status {
+      font-weight: 600;
+      font-size: 18px;
+      text-align: right;
+    }
+    .button {
+      border-radius: 50px;
+      border: 1px solid;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: transparent;
+      box-sizing: border-box;
+      padding: 8px 16px;
+      font-weight: bold;
+    }
+    .success {
+      color: $success-text;
+      border-color: $success-border;
+      &:disabled {
+        color: $success-disabled;
+        border-color: $success-disabled;
+      }
+    }
+    .danger {
+      color: $danger-text;
+      border-color: $danger-border;
+      &:disabled {
+        color: $danger-disabled;
+        border-color: $danger-disabled;
+      }
+    }
+    .primary {
+      color: #4f6c92;
+    }
+  }
+}
