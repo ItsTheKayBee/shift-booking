@@ -28,6 +28,9 @@ const MyShifts = ({ shifts = [] }) => {
 
 	return (
 		<div className={styles.section}>
+			{shifts &&
+				Object.keys(shiftGroups).length === 0 &&
+				'No booked shifts. Please book a shift first!'}
 			{Object.keys(shiftGroups).map(date => (
 				<ShiftGroup shifts={shiftGroups[date]} key={date} />
 			))}

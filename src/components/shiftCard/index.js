@@ -5,7 +5,7 @@ import useRequest from '../../hooks/useRequest'
 import { useShiftsContext } from '../../context/ShiftsContext'
 
 import styles from './index.module.scss'
-import { loadingStates, shiftStates } from '../../services/constants'
+import { loadingStates, pages, shiftStates } from '../../services/constants'
 import { bookShiftByID, cancelShiftByID } from '../../services/apis'
 import Loader from '../Loader'
 
@@ -14,11 +14,12 @@ const ShiftCard = ({
 	endTime,
 	area,
 	booked = false,
-	myShiftsTab = true,
 	bookedShifts,
 	id
 }) => {
 	const [status, setStatus] = useState('')
+
+	const { currentPage } = useShiftsContext()
 
 	const isOverlapping = useMemo(() => {
 		if (booked) return false
@@ -42,17 +43,21 @@ const ShiftCard = ({
 					{format(new Date(startTime), 'HH:mm')}-
 					{format(new Date(endTime), 'HH:mm')}
 				</h5>
-				{myShiftsTab && <p className={styles.area}>{area}</p>}
+				{currentPage === pages.MY_SHIFTS && (
+					<p className={styles.area}>{area}</p>
+				)}
 			</div>
 			<div className={styles.statusAction}>
-				<div
-					className={classHelper(
-						styles.status,
-						isOverlapping ? styles.danger : styles.primary
-					)}
-				>
-					{status}
-				</div>
+				{currentPage === pages.AVAILABLE_SHIFTS && (
+					<div
+						className={classHelper(
+							styles.status,
+							isOverlapping ? styles.danger : styles.primary
+						)}
+					>
+						{status}
+					</div>
+				)}
 				<Button
 					startTime={startTime}
 					endTime={endTime}

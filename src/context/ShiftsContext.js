@@ -1,10 +1,19 @@
-import { createContext, useCallback, useContext, useEffect } from 'react'
+import {
+	createContext,
+	useCallback,
+	useContext,
+	useEffect,
+	useState
+} from 'react'
 import useRequest from '../hooks/useRequest'
 import { getAllShifts } from '../services/apis'
+import { pages } from '../services/constants'
 
 const ShiftsContext = createContext({})
 
 const ShiftsProvider = ({ children }) => {
+	const [currentPage, changeCurrentPage] = useState(pages.MY_SHIFTS)
+
 	const { data: shifts, error, loading, handleRequest } = useRequest()
 
 	useEffect(() => {
@@ -17,7 +26,16 @@ const ShiftsProvider = ({ children }) => {
 	)
 
 	return (
-		<ShiftsContext.Provider value={{ shifts, error, loading, refreshShifts }}>
+		<ShiftsContext.Provider
+			value={{
+				shifts,
+				error,
+				loading,
+				refreshShifts,
+				currentPage,
+				changeCurrentPage
+			}}
+		>
 			{children}
 		</ShiftsContext.Provider>
 	)

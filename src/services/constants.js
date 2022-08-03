@@ -33,3 +33,8 @@ export const formatRelativeLocale = {
 	nextWeek: 'MMMM dd',
 	other: 'MMMM dd'
 }
+
+export const pages = {
+	MY_SHIFTS: 'My Shifts',
+	AVAILABLE_SHIFTS: 'Available Shifts'
+}

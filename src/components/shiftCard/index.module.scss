@@ -49,6 +49,7 @@
       &:disabled {
         color: $success-disabled;
         border-color: $success-disabled;
+        cursor: not-allowed;
       }
     }
     .danger {
@@ -57,6 +58,7 @@
       &:disabled {
         color: $danger-disabled;
         border-color: $danger-disabled;
+        cursor: not-allowed;
       }
     }
     .primary {
