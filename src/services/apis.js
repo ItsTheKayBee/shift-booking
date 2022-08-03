@@ -1,4 +1,4 @@
-import { requestMethods, shiftActions } from './constants'
+import { shiftActions } from './constants'
 import { request } from './networkHandler'
 
 const SHIFTS_API = '/shifts'

@@ -4,7 +4,9 @@ export const filterByProperty = ({
 	array = [],
 	property = '',
 	propertyValue = ''
-}) => array.filter(element => element[property.toLowerCase()] === propertyValue)
+}) =>
+	array?.filter(element => element[property.toLowerCase()] === propertyValue) ??
+	[]
 
 export const parseDuration = minutes => {
 	const hours = Math.floor(minutes / 60)

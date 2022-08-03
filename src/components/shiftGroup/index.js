@@ -3,17 +3,9 @@ import ShiftCard from '../shiftCard'
 import { formatRelative, differenceInMinutes } from 'date-fns'
 import enIN from 'date-fns/locale/en-IN'
 import { filterByProperty, parseDuration } from '../../services/util'
+import { formatRelativeLocale } from '../../services/constants'
 
 import styles from './index.module.scss'
-
-const formatRelativeLocale = {
-	lastWeek: 'MMMM dd',
-	yesterday: "'Yesterday'",
-	today: "'Today'",
-	tomorrow: "'Tomorrow'",
-	nextWeek: 'MMMM dd',
-	other: 'MMMM dd'
-}
 
 const ShiftGroup = ({ shifts = [] }) => {
 	const [totalTime, setTotalTime] = useState('')
@@ -32,20 +24,11 @@ const ShiftGroup = ({ shifts = [] }) => {
 	}, [shifts])
 
 	const calculateTotalTime = useCallback(() => {
-		const time = shifts.reduce((prev, curr, index) => {
-			if (index === 1) {
-				return (
-					differenceInMinutes(
-						new Date(prev.endTime),
-						new Date(prev.startTime)
-					) +
-					differenceInMinutes(new Date(curr.endTime), new Date(curr.startTime))
-				)
-			}
-
-			return (
-				prev +
-				differenceInMinutes(new Date(curr.endTime), new Date(curr.startTime))
+		let time = 0
+		shifts.forEach(shift => {
+			time += differenceInMinutes(
+				new Date(shift.endTime),
+				new Date(shift.startTime)
 			)
 		})
 		setTotalTime(parseDuration(time))

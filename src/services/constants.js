@@ -18,3 +18,18 @@ export const areas = {
 	TAMPERE: 'Tampere',
 	TURKU: 'Turku'
 }
+
+export const loadingStates = {
+	SUCCESS: '#16A64D',
+	DEFAULT: '#004FB4',
+	DANGER: '#E2006A'
+}
+
+export const formatRelativeLocale = {
+	lastWeek: 'MMMM dd',
+	yesterday: "'Yesterday'",
+	today: "'Today'",
+	tomorrow: "'Tomorrow'",
+	nextWeek: 'MMMM dd',
+	other: 'MMMM dd'
+}

@@ -2,9 +2,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { format } from 'date-fns'
 import { checkTimeOverlap, classHelper } from '../../services/util'
 import useRequest from '../../hooks/useRequest'
+import { useShiftsContext } from '../../context/ShiftsContext'
 
 import styles from './index.module.scss'
-import { shiftStates } from '../../services/constants'
+import { loadingStates, shiftStates } from '../../services/constants'
 import { bookShiftByID, cancelShiftByID } from '../../services/apis'
 import Loader from '../Loader'
 
@@ -44,7 +45,14 @@ const ShiftCard = ({
 				{myShiftsTab && <p className={styles.area}>{area}</p>}
 			</div>
 			<div className={styles.statusAction}>
-				<div className={classHelper(styles.status)}>{status}</div>
+				<div
+					className={classHelper(
+						styles.status,
+						isOverlapping ? styles.danger : styles.primary
+					)}
+				>
+					{status}
+				</div>
 				<Button
 					startTime={startTime}
 					endTime={endTime}
@@ -58,7 +66,8 @@ const ShiftCard = ({
 }
 
 const Button = ({ startTime, endTime, booked, isOverlapping, id }) => {
-	const { loading, handleRequest } = useRequest()
+	const { data, loading, handleRequest } = useRequest()
+	const { refreshShifts } = useShiftsContext()
 
 	const hasShiftStarted = useCallback(() => Date.now() > startTime, [startTime])
 
@@ -76,6 +85,10 @@ const Button = ({ startTime, endTime, booked, isOverlapping, id }) => {
 	const cancelSlot = () => {
 		handleRequest(() => cancelShiftByID(id))
 	}
+
+	useEffect(() => {
+		if (data) refreshShifts()
+	}, [data, refreshShifts])
 
 	const onClickHandler = () => {
 		if (isShiftGone || isOverlapping) return null
@@ -97,7 +110,15 @@ const Button = ({ startTime, endTime, booked, isOverlapping, id }) => {
 			onClick={onClickHandler}
 			disabled={isShiftGone || isOverlapping}
 		>
-			{loading ? <Loader /> : booked ? 'Cancel' : 'Book'}
+			{loading ? (
+				<Loader
+					status={booked ? loadingStates.DANGER : loadingStates.SUCCESS}
+				/>
+			) : booked ? (
+				'Cancel'
+			) : (
+				'Book'
+			)}
 		</button>
 	)
 }
