@@ -8,7 +8,6 @@ const apiCall = () => {
 
 	return axios.create({
 		baseURL,
-		timeout: 2000,
 		headers
 	})
 }

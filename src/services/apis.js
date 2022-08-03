@@ -15,12 +15,10 @@ export const getShiftByID = id =>
 
 export const bookShiftByID = id =>
 	request({
-		endpoint: `${SHIFTS_API}/${id}/${shiftActions.BOOK}`,
-		method: requestMethods.POST
+		endpoint: `${SHIFTS_API}/${id}/${shiftActions.BOOK}`
 	})
 
 export const cancelShiftByID = id =>
 	request({
-		endpoint: `${SHIFTS_API}/${id}/${shiftActions.CANCEL}`,
-		method: requestMethods.POST
+		endpoint: `${SHIFTS_API}/${id}/${shiftActions.CANCEL}`
 	})

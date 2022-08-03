@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import ShiftCard from '../shiftCard'
 import { formatRelative, differenceInMinutes } from 'date-fns'
 import enIN from 'date-fns/locale/en-IN'
-import { parseDuration } from '../../services/util'
+import { filterByProperty, parseDuration } from '../../services/util'
 
 import styles from './index.module.scss'
 
@@ -18,6 +18,7 @@ const formatRelativeLocale = {
 const ShiftGroup = ({ shifts = [] }) => {
 	const [totalTime, setTotalTime] = useState('')
 	const [date, setDate] = useState('')
+	const [bookedShifts, setBookedShifts] = useState([])
 
 	const calculateDate = useCallback(() => {
 		const newDate = formatRelative(new Date(shifts[0].startTime), new Date(), {
@@ -51,6 +52,15 @@ const ShiftGroup = ({ shifts = [] }) => {
 	}, [shifts])
 
 	useEffect(() => {
+		const result = filterByProperty({
+			array: shifts,
+			property: 'booked',
+			propertyValue: true
+		})
+		setBookedShifts(result)
+	}, [shifts])
+
+	useEffect(() => {
 		if (shifts.length > 0) {
 			calculateDate()
 			calculateTotalTime()
@@ -68,7 +78,7 @@ const ShiftGroup = ({ shifts = [] }) => {
 				</span>
 			</div>
 			{shifts.map(shift => (
-				<ShiftCard key={shift.id} {...shift} />
+				<ShiftCard key={shift.id} {...shift} bookedShifts={bookedShifts} />
 			))}
 		</div>
 	)

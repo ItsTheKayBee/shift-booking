@@ -10,7 +10,6 @@ export const shiftActions = {
 
 export const shiftStates = {
 	BOOKED: 'Booked',
-	AVAILABLE: 'Available',
 	OVERLAPPING: 'Overlapping'
 }
 
