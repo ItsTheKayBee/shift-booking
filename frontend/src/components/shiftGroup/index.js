@@ -38,6 +38,11 @@ const ShiftGroup = ({ shifts = [] }) => {
 		return parseDuration(time)
 	}, [shifts, currentPage])
 
+	const sortedShifts = useMemo(
+		() => shifts.sort((a, b) => a.startTime - b.startTime),
+		[shifts]
+	)
+
 	useEffect(() => {
 		const result = filterByProperty({
 			array: allShifts,
@@ -63,7 +68,7 @@ const ShiftGroup = ({ shifts = [] }) => {
 					</span>
 				)}
 			</div>
-			{shifts.map(shift => (
+			{sortedShifts.map(shift => (
 				<ShiftCard key={shift.id} {...shift} bookedShifts={bookedShifts} />
 			))}
 		</div>
